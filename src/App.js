@@ -1,6 +1,6 @@
 import {finalSpaceCharacters} from './util/data'
 import './App.css';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 function App() {
   return (
@@ -18,20 +18,33 @@ function App() {
         like at the root of your application. You can not nest DragDropContext. 
       */}
       <DragDropContext>
-        <ul className="characters">
-          {finalSpaceCharacters.map(({id, name, thumb}) => {
-            return (
-              <li key={id}>
-                <div className="characters-thumb">
-                  <img src={thumb} alt={`${name} Thumb`} />
-                </div>
-                <p>
-                  { name }
-                </p>
-              </li>
-            );
-          })}
-        </ul>
+        <Droppable droppableId="characters">
+          {/* The provided argument include information and references to 
+          code that the library needs to work properly. */}
+          {(provided) => (
+            /* This is going to create a reference (provided.innerRef) for the library to access the list 
+            element’s HTML element.  It also applies props to the element (provided.droppableProps) 
+            that allows the library to keep track of movements and positioning. */
+            <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
+              {finalSpaceCharacters.map(({id, name, thumb}) => {
+                return (
+                  <Draggable>
+                    {(provided) => (
+                      <li key={id}>
+                        <div className="characters-thumb">
+                          <img src={thumb} alt={`${name} Thumb`} />
+                        </div>
+                        <p>
+                          { name }
+                        </p>
+                      </li>
+                    )}                  
+                  </Draggable>
+                );
+              })}
+            </ul>
+          )}     
+        </Droppable>
       </DragDropContext>
     </header>
     <p>
