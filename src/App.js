@@ -26,11 +26,15 @@ function App() {
             element’s HTML element.  It also applies props to the element (provided.droppableProps) 
             that allows the library to keep track of movements and positioning. */
             <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-              {finalSpaceCharacters.map(({id, name, thumb}) => {
+              {finalSpaceCharacters.map(({id, name, thumb}, index) => {
                 return (
                   <Draggable key={id} draggableId={id} index={index}>
                     {(provided) => (
-                      <li >
+                      <li 
+                        ref={provided.innerRef} 
+                        {...provided.draggableProps} 
+                        {...provided.dragHandleProps}
+                      >
                         <div className="characters-thumb">
                           <img src={thumb} alt={`${name} Thumb`} />
                         </div>
@@ -42,6 +46,7 @@ function App() {
                   </Draggable>
                 );
               })}
+              {provided.placeholder}
             </ul>
           )}     
         </Droppable>
