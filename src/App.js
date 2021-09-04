@@ -8,6 +8,15 @@ function App() {
     <header className="App-header">
       <h1>Final Space Characters</h1>
 
+      {/* 
+        DragDropContext is going to give our app the ability to use the library. 
+        It works similarly to React’s Context API, where the library can now have 
+        access to the component tree.
+
+        Note: If you plan on adding drag and drop to more than one list, 
+        you need to make sure that your DragDropContext wraps all of those items, 
+        like at the root of your application. You can not nest DragDropContext. 
+      */}
       <DragDropContext>
         <ul className="characters">
           {finalSpaceCharacters.map(({id, name, thumb}) => {
