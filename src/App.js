@@ -7,6 +7,14 @@ function App() {
 
   const [characters, updateCharacters] = useState(finalSpaceCharacters);
 
+  const handleOnDragEnd = (result) => {
+    console.log(result);
+    const items = Array.from(characters);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    updateCharacters(items);
+  }
 
   return (
     <div className="App">
@@ -30,7 +38,10 @@ function App() {
         you need to make sure that your DragDropContext wraps all of those items, 
         like at the root of your application. You can not nest DragDropContext. 
       */}
-      <DragDropContext>
+          {/* The DragDropContext component that we added to our page takes in a prop onDragEnd. 
+          Like it sounds, that will fire a function whenever someone stops dragging an 
+          item in the list. */}
+      <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="characters">
           {/* The provided argument include information and references to 
           code that the library needs to work properly. */}
@@ -39,7 +50,7 @@ function App() {
             element’s HTML element.  It also applies props to the element (provided.droppableProps) 
             that allows the library to keep track of movements and positioning. */
             <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-              {finalSpaceCharacters.map(({id, name, thumb}, index) => {
+              {characters.map(({id, name, thumb}, index) => {
                 return (
                   <Draggable key={id} draggableId={id} index={index}>
                     {(provided) => (
