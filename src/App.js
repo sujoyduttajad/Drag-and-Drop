@@ -9,6 +9,19 @@ function App() {
 
   const handleOnDragEnd = (result) => {
     console.log(result);
+    // we can simply add a statement above the code that moves our item around that 
+    // checks if the destination exists, and if it doesn’t, exits out of the function:
+    if (!result.destination) return;
+    /* 
+      --> We create a new copy of our characters array
+      --> We use the source.index value to find our item from our new array and 
+      remove it using the splice method
+      --> That result is destructured, so we end up with a new object of 
+      reorderedItem that is our dragged item
+      --> We then use our destination.index to add that item back into the array, 
+      but at it’s new location, again using splice
+      --> Finally, we update our characters state using the updateCharacters function
+    */
     const items = Array.from(characters);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
