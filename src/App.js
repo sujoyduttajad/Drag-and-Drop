@@ -28,9 +28,9 @@ function App() {
             <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
               {finalSpaceCharacters.map(({id, name, thumb}) => {
                 return (
-                  <Draggable>
+                  <Draggable key={id} draggableId={id} index={index}>
                     {(provided) => (
-                      <li key={id}>
+                      <li >
                         <div className="characters-thumb">
                           <img src={thumb} alt={`${name} Thumb`} />
                         </div>
