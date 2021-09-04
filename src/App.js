@@ -1,13 +1,26 @@
+import React, {useState} from 'react';
 import {finalSpaceCharacters} from './util/data'
 import './App.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 function App() {
+
+  const [characters, updateCharacters] = useState(finalSpaceCharacters);
+
+
   return (
     <div className="App">
     <header className="App-header">
       <h1>Final Space Characters</h1>
+      {/* 
+        When the components rerender, our items go back to the same place that they were before, 
+        because we never saved that outside of DnD’s memory.
 
+        To resolve this, DragDropContext takes in an onDragEnd prop that will allow 
+        us to fire a function after dragging has complete. That function passes in 
+        arguments that includes the new order of our items so that we can update our 
+        state for the next render cycle. 
+      */}
       {/* 
         DragDropContext is going to give our app the ability to use the library. 
         It works similarly to React’s Context API, where the library can now have 
